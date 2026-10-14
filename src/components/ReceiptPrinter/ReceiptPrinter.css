@@ -1,0 +1,60 @@
+.printer {
+  --feed-duration: 3.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.printer-machine {
+  display: block;
+  width: 100%;
+}
+
+/* only the top of the machine, down through the slot's teeth, sits in front of the paper */
+.printer-front {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  clip-path: inset(0 0 42% 0);
+}
+
+/* the machine is ~15.7% as tall as it is wide; pulling up 7.9% starts the paper
+   in the middle of the dark slot, just inside its opening */
+.paper-feed {
+  position: relative;
+  z-index: 1;
+  width: 78%;
+  margin-top: -7.9%;
+  overflow: hidden;
+  filter: drop-shadow(0 2px 6px rgba(24, 29, 39, 0.12));
+}
+
+.receipt-paper {
+  --tooth: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 18px calc(18px + var(--tooth) / 2);
+  background: #fff;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12px;
+  /* torn zig-zag bottom edge */
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--tooth) 100%;
+  animation: paper-feed var(--feed-duration) cubic-bezier(0.33, 0.1, 0.25, 1) both;
+}
+
+/* slides down slowly out of the slot */
+@keyframes paper-feed {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .receipt-paper {
+    animation-duration: 1ms;
+  }
+}
