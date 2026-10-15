@@ -10,7 +10,6 @@ const priceFormat = new Intl.NumberFormat('en-NG', {
 });
 const dateFormat = new Intl.DateTimeFormat('en-NG', { dateStyle: 'medium', timeStyle: 'short' });
 
-// a sample receipt to print
 const lines = [
   { name: 'Air Max', qty: 1, price: 35000 },
   { name: 'Afnan 9PM', qty: 1, price: 55000 },
@@ -21,13 +20,12 @@ const lines = [
 const VAT_RATE = 0.075;
 
 export default function App() {
-  // 0 until the first print; each click feeds a fresh sheet
   const [printId, setPrintId] = useState(0);
   const [printing, setPrinting] = useState(false);
+  const [printed, setPrinted] = useState(false);
   const [printedAt, setPrintedAt] = useState(() => Date.now());
   const [color, setColor] = useState<PrinterColor>('gold');
 
-  // load every finish up front, so switching doesn't flash an empty printer
   useEffect(() => {
     for (const printer of printers) new Image().src = printer.src;
   }, []);
@@ -39,6 +37,7 @@ export default function App() {
     setPrintedAt(Date.now());
     setPrintId((id) => id + 1);
     setPrinting(true);
+    setPrinted(true);
   };
 
   return (
@@ -48,8 +47,8 @@ export default function App() {
           <h1>Receipt printer</h1>
           <p>Press print to feed a receipt out of the printer.</p>
         </div>
-        <button type="button" className="print-btn" onClick={print} disabled={printing}>
-          {printing ? 'Printing…' : printId > 0 ? 'Print again' : 'Print'}
+        <button type="button" className="print-btn" onClick={printed ? () => setPrinted(false) : print} disabled={printing}>
+          {printing ? 'Printing…' : printed ? 'Reset' : 'Print'}
         </button>
       </header>
 
@@ -72,9 +71,9 @@ export default function App() {
         </div>
       </div>
 
-      <ReceiptPrinter printId={printId} color={color} onPrinted={() => setPrinting(false)}>
+      <ReceiptPrinter printId={printed ? printId : 0} color={color} onPrinted={() => setPrinting(false)}>
         <header className="receipt-head">
-          <strong>Invio Store</strong>
+          <strong>Maggi Store</strong>
           <span>Receipt #{String(printId).padStart(4, '0')}</span>
           <span>{dateFormat.format(printedAt)}</span>
         </header>

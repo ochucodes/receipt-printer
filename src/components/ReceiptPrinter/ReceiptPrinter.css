@@ -1,6 +1,5 @@
 .printer {
   --feed-duration: 3.2s;
-  /* the image's height / width, set per colour */
   --printer-aspect: 0.157;
   position: relative;
   display: flex;
@@ -14,7 +13,6 @@
   width: 100%;
 }
 
-/* only the top of the machine, down through the slot's teeth, sits in front of the paper */
 .printer-front {
   position: absolute;
   z-index: 2;
@@ -23,8 +21,7 @@
   clip-path: inset(0 0 42% 0);
 }
 
-/* pulling up by half the machine's height starts the paper in the middle of the dark
-   slot, just inside its opening; margins are a share of the width, hence the aspect */
+/* % margins resolve against width, so scale by the aspect to pull up half the machine's height */
 .paper-feed {
   position: relative;
   z-index: 1;
@@ -43,12 +40,10 @@
   background: #fff;
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 12px;
-  /* torn zig-zag bottom edge */
   mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--tooth) 100%;
   animation: paper-feed var(--feed-duration) cubic-bezier(0.33, 0.1, 0.25, 1) both;
 }
 
-/* slides down slowly out of the slot */
 @keyframes paper-feed {
   from {
     transform: translateY(-100%);

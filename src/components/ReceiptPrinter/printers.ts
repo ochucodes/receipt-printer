@@ -4,13 +4,10 @@ export type PrinterModel = {
   id: PrinterColor
   label: string
   src: string
-  // the image's height / width; the paper starts halfway down the slot, so it depends on it
   aspect: number
-  // a CSS background for a colour swatch
   swatch: string
 }
 
-// To add a colour: drop the image in public/images and add a line here.
 export const printers: PrinterModel[] = [
   {
     id: 'gold',
