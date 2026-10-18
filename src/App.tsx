@@ -47,7 +47,12 @@ export default function App() {
           <h1>Receipt printer</h1>
           <p>Press print to feed a receipt out of the printer.</p>
         </div>
-        <button type="button" className="print-btn" onClick={printed ? () => setPrinted(false) : print} disabled={printing}>
+        <button
+          type="button"
+          className="print-btn"
+          onClick={printed ? () => setPrinted(false) : print}
+          disabled={printing}
+        >
           {printing ? 'Printing…' : printed ? 'Reset' : 'Print'}
         </button>
       </header>
@@ -71,7 +76,11 @@ export default function App() {
         </div>
       </div>
 
-      <ReceiptPrinter printId={printed ? printId : 0} color={color} onPrinted={() => setPrinting(false)}>
+      <ReceiptPrinter
+        printId={printed ? printId : 0}
+        color={color}
+        onPrinted={() => setPrinting(false)}
+      >
         <header className="receipt-head">
           <strong>Maggi Store</strong>
           <span>Receipt #{String(printId).padStart(4, '0')}</span>
@@ -104,7 +113,7 @@ export default function App() {
           </div>
         </dl>
 
-        <p className="receipt-thanks">Thank you for shopping with us</p>
+        <p className="receipt-thanks">Thank you for shopping with uss</p>
       </ReceiptPrinter>
     </main>
   );
