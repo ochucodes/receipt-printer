@@ -113,7 +113,7 @@ export default function App() {
           </div>
         </dl>
 
-        <p className="receipt-thanks">Thank you for shopping with uss</p>
+        <p className="receipt-thanks">Thank you for shopping with us</p>
       </ReceiptPrinter>
     </main>
   );
